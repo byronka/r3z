@@ -474,3 +474,5 @@
 2021-07-01	numberThreads: 20	numberRequests: 100	time: 1138
 2021-07-05	numberThreads: 20	numberRequests: 100	time: 1149
 2021-07-05	numberThreads: 20	numberRequests: 100	time: 1418
+2021-09-18	numberThreads: 20	numberRequests: 100	time: 2523
+2022-03-31	numberThreads: 20	numberRequests: 100	time: 2143

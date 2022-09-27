@@ -21,6 +21,7 @@ import java.net.SocketTimeoutException
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 import java.util.concurrent.ExecutorService
 import javax.net.ssl.SSLException
 
@@ -150,7 +151,7 @@ class ServerUtilities {
             try {
                 do {
                     val requestData = handleRequest(server, pmd, serverObjects)
-                    shouldKeepAlive = requestData.headers.any { it.toLowerCase().contains("connection: keep-alive") }
+                    shouldKeepAlive = requestData.headers.any { it.lowercase(Locale.getDefault()).contains("connection: keep-alive") }
                     if (shouldKeepAlive) {
                         logger.logTrace { "This is a keep-alive connection" }
                     }
@@ -180,7 +181,8 @@ class ServerUtilities {
                     // if the user sets the option to allow insecure use, we won't redirect to the secure endpoint
                     // but if not, redirect
                     if (!serverObjects.allowInsecureUsage && onInsecureEndpoint) {
-                        analyzedHttpData = analyzedHttpData.copy(headers = analyzedHttpData.headers.filterNot {it.toLowerCase().contains("connection: keep-alive")})
+                        analyzedHttpData = analyzedHttpData.copy(headers = analyzedHttpData.headers.filterNot {
+                            it.lowercase(Locale.getDefault()).contains("connection: keep-alive")})
                         redirectToSslEndpoint(analyzedHttpData, serverObjects)
                     } else {
                         obtainStaticAndDynamicContent(serverObjects, analyzedHttpData, pmd)

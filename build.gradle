@@ -17,31 +17,6 @@ repositories {
     mavenCentral()
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(13))
-    }
-}
-
-// The following text is copy-pasted from Gradle's own repo
-// for how to provide Kotlin with the necessary JDK directory.
-// Yeah I know it's weird-looking, but it definitely works.
-//
-// copied from https://github.com/gradle/gradle/blob/master/subprojects/docs/src/snippets/java/toolchain-kotlin/groovy/build.gradle
-//
-// It allows a user to only have any java installed, and
-// gradle will pull down the proper JDK if needed and use that
-// for compiling Kotlin
-// tag::compiler-kotlin[]
-def compiler = javaToolchains.compilerFor {
-    languageVersion = JavaLanguageVersion.of(13)
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile).configureEach {
-    kotlinOptions.jdkHome = compiler.get().metadata.installationPath.asFile.absolutePath
-}
-// end::compiler-kotlin[]
-
 group 'com.coveros.r3z'
 
 // we'll use a variant of semantic versioning.
@@ -328,5 +303,4 @@ static String getCurrentGitHash() {
 
 compileKotlin {
     finalizedBy writeGitCommitToFile
-    kotlinOptions.useIR = true
 }

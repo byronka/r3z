@@ -485,3 +485,5 @@
 2021-07-01	numberThreads: 5	numberRequests: 200	time: 304
 2021-07-05	numberThreads: 5	numberRequests: 200	time: 236
 2021-07-05	numberThreads: 5	numberRequests: 200	time: 190
+2021-09-18	numberThreads: 5	numberRequests: 200	time: 305
+2022-03-31	numberThreads: 5	numberRequests: 200	time: 286

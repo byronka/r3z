@@ -17,6 +17,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.experimental.categories.Category
+import java.util.*
 
 @Category(APITestCategory::class)
 class ViewTimeAPITests {
@@ -444,7 +445,7 @@ class ViewTimeAPITests {
             user = DEFAULT_ADMIN_USER,
             queryStringMap = mapOf(ViewTimeAPI.Elements.REQUESTED_EMPLOYEE.getElemName() to DEFAULT_EMPLOYEE_2.id.value.toString()))
 
-        val result = ViewTimeAPI.handleGet(sd).fileContentsString().toLowerCase()
+        val result = ViewTimeAPI.handleGet(sd).fileContentsString().lowercase(Locale.getDefault())
 
         assertFalse(result.contains(">submit<"))
         assertFalse(result.contains(">enter time<"))

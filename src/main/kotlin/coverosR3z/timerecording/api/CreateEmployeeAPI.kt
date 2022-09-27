@@ -16,6 +16,7 @@ import coverosR3z.timerecording.types.Employee
 import coverosR3z.timerecording.types.EmployeeName
 import coverosR3z.timerecording.types.NO_EMPLOYEE
 import coverosR3z.timerecording.types.maxEmployeeNameSize
+import java.util.*
 
 class CreateEmployeeAPI(private val sd: ServerData) {
 
@@ -109,7 +110,7 @@ class CreateEmployeeAPI(private val sd: ServerData) {
 <tr>
     <td>${safeHtml(it.key.name.value)}</td>
     <td>$invitationLink</td>
-    <td>${associatedUser.role.toString().toLowerCase()}</td>
+    <td>${associatedUser.role.toString().lowercase(Locale.getDefault())}</td>
     <td>
          <form action="${RoleAPI.path}" method="post">
             <input type="hidden" name="${RoleAPI.Elements.EMPLOYEE_ID.getElemName()}" value="${it.key.id.value}" />

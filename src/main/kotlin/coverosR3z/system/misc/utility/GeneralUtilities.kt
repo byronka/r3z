@@ -5,6 +5,7 @@ import coverosR3z.server.types.Element
 import java.lang.IllegalStateException
 import java.net.URLDecoder
 import java.net.URLEncoder
+import java.util.*
 
 private const val SPACE = "(SPACE)"
 
@@ -182,17 +183,17 @@ fun String.toTitleCase(): String {
         if (arr[0].isEmpty()) {
             arr[0]
         } else {
-            arr[0][0].toUpperCase() + arr[0].substring(1)
+            arr[0][0].uppercaseChar() + arr[0].substring(1)
         }
     )
 
     for (i in 1 until arr.size) {
         if(arr[i].isEmpty()){
             result.add(arr[i])
-        } else if (arr[i].toLowerCase() !in articles) {
-            result.add(arr[i][0].toUpperCase() + arr[i].substring(1))
+        } else if (arr[i].lowercase(Locale.getDefault()) !in articles) {
+            result.add(arr[i][0].uppercaseChar() + arr[i].substring(1))
         } else {
-            result.add(arr[i][0].toLowerCase() + arr[i].substring(1))
+            result.add(arr[i][0].lowercaseChar() + arr[i].substring(1))
         }
     }
         return result.joinToString(" ")

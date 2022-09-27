@@ -12,6 +12,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.experimental.categories.Category
+import java.util.*
 
 @Category(APITestCategory::class)
 class MessageAPITests {
@@ -125,7 +126,7 @@ class MessageAPITests {
 
         assertTrue(result.contains("""This is the message we show"""))
         assertTrue(result.contains("""href="some_path""""))
-        assertTrue(result.contains("""class="${MessageAPI.MessageType.SUCCESS.toString().toLowerCase()}""""))
+        assertTrue(result.contains("""class="${MessageAPI.MessageType.SUCCESS.toString().lowercase(Locale.getDefault())}""""))
     }
 
     /**
@@ -143,7 +144,7 @@ class MessageAPITests {
 
         assertTrue(result.contains("""This is the message we show"""))
         assertTrue(result.contains("""href="some_path""""))
-        assertTrue(result.contains("""class="${MessageAPI.MessageType.FAILURE.toString().toLowerCase()}""""))
+        assertTrue(result.contains("""class="${MessageAPI.MessageType.FAILURE.toString().lowercase(Locale.getDefault())}""""))
     }
 
     /**
@@ -162,7 +163,7 @@ class MessageAPITests {
 
         assertTrue(result.contains("""This is the message we show"""))
         assertTrue(result.contains("""href="some_path""""))
-        assertTrue(result.contains("""class="${MessageAPI.MessageType.FAILURE.toString().toLowerCase()}""""))
+        assertTrue(result.contains("""class="${MessageAPI.MessageType.FAILURE.toString().lowercase(Locale.getDefault())}""""))
     }
 
     /**

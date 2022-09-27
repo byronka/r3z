@@ -9,6 +9,7 @@ import coverosR3z.server.utility.AuthUtilities.Companion.doPOSTAuthenticated
 import coverosR3z.timerecording.types.Employee
 import coverosR3z.timerecording.types.EmployeeId
 import coverosR3z.timerecording.types.NO_EMPLOYEE
+import java.util.*
 
 class RoleAPI {
 
@@ -40,7 +41,7 @@ class RoleAPI {
             val role = obtainRole(sd)
             sd.bc.au.addRoleToUser(user, role)
             return MessageAPI.createCustomMessageRedirect(
-                "${employee.name.value} now has a role of: ${role.toString().toLowerCase()}",
+                "${employee.name.value} now has a role of: ${role.toString().lowercase(Locale.getDefault())}",
                 true,
                 CreateEmployeeAPI.path
             )
@@ -48,7 +49,7 @@ class RoleAPI {
 
         private fun obtainRole(sd: ServerData): Role {
             val roleString = sd.ahd.data.mapping[Elements.ROLE.getElemName()]?.trim() ?: ""
-            return Role.valueOf(roleString.toUpperCase())
+            return Role.valueOf(roleString.uppercase(Locale.getDefault()))
         }
 
         /**

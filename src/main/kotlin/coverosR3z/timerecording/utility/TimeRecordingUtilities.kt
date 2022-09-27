@@ -99,7 +99,7 @@ class TimeRecordingUtilities(
 
     private fun createOrModifyEntry(entry: TimeEntryPreDatabase, oldEntry: TimeEntry = NO_TIMEENTRY, behavior: () -> TimeEntry): RecordTimeResult{
         val user = cu
-        // ensure time entry user is the logged in user, or
+        // ensure time entry user is the logged-in user, or
         // is the system
         if (user.employee != entry.employee) {
             logger.logWarn(cu) {"time was not recorded successfully: current user ${user.name.value} does not have access " +
@@ -134,7 +134,7 @@ class TimeRecordingUtilities(
                 // if the employee hasn't entered any time on this date, return 0 minutes
                 val totalMinutes = timeEntries
                     .filter { it.date == date && it.employee == employee }
-                    .sumBy { te -> te.time.numberOfMinutes }
+                    .sumOf { te -> te.time.numberOfMinutes }
                 return Time(totalMinutes)
             })
         val twentyFourHours = 24 * 60
@@ -258,9 +258,10 @@ class TimeRecordingUtilities(
         val sundayED = sunday.epochDay
         require (dayOfWeekCalc(sundayED) == DayOfWeek.Sunday)
 
-        val totalMinutesOverWeek = timeEntryDataAccess.read { timeentries -> timeentries
-            .filter { (sundayED..(sundayED + 6)).contains(it.date.epochDay) && it.employee == employee }
-            .sumBy { it.time.numberOfMinutes }
+        val totalMinutesOverWeek = timeEntryDataAccess.read { timeentries ->
+            timeentries
+                .filter { (sundayED..(sundayED + 6)).contains(it.date.epochDay) && it.employee == employee }
+                .sumOf { it.time.numberOfMinutes }
         }
 
         return Time(totalMinutesOverWeek)

@@ -4,6 +4,8 @@ import coverosR3z.system.logging.ILogger
 import coverosR3z.system.misc.utility.decode
 import coverosR3z.server.exceptions.DuplicateInputsException
 import coverosR3z.server.types.*
+import java.util.*
+import kotlin.NoSuchElementException
 
 
 /**
@@ -133,7 +135,7 @@ private fun analyzeAsClient(statusLineMatches: MatchResult, socketWrapper: ISock
  * read the body if one exists and convert it to a string -> string map
  */
 private fun extractData(server: ISocketWrapper, headers: List<String>) : PostBodyData {
-    return if (headers.any { it.toLowerCase().startsWith(CONTENT_LENGTH.toLowerCase())}) {
+    return if (headers.any { it.lowercase(Locale.getDefault()).startsWith(CONTENT_LENGTH.lowercase(Locale.getDefault()))}) {
         val length = extractLengthOfPostBodyFromHeaders(headers)
         val body = server.read(length)
         PostBodyData(parseUrlEncodedForm(body), body)
@@ -178,7 +180,8 @@ fun parseStatusLineAsClient(matchResult: MatchResult, logger: ILogger): StatusCo
 fun extractLengthOfPostBodyFromHeaders(headers: List<String>): Int {
     require(headers.isNotEmpty()) {"We must receive at least one header at this point or the request is invalid"}
     try {
-        val lengthHeader: String = headers.single { it.toLowerCase().startsWith(CONTENT_LENGTH.toLowerCase()) }
+        val lengthHeader: String = headers.single { it.lowercase(Locale.getDefault())
+            .startsWith(CONTENT_LENGTH.lowercase(Locale.getDefault())) }
         val length: Int? = contentLengthRegex.matchEntire(lengthHeader)?.groups?.get(1)?.value?.toInt()
         checkNotNull(length) {"The length must not be null for this input.  It was: $lengthHeader"}
         check(length <= maxContentLength) {"The Content-length is not allowed to exceed $maxContentLength characters"}
@@ -202,7 +205,7 @@ fun extractLengthOfPostBodyFromHeaders(headers: List<String>): Int {
 fun extractSessionTokenFromHeaders(headers: List<String>): String? {
     if (headers.isEmpty()) return null
 
-    val cookieHeaders = headers.filter { it.toLowerCase().startsWith("cookie:") }
+    val cookieHeaders = headers.filter { it.lowercase(Locale.getDefault()).startsWith("cookie:") }
     val concatenatedHeaders = cookieHeaders.joinToString(";") { cookieRegex.matchEntire(it)?.groups?.get(1)?.value ?: "" }
     val splitUpCookies = concatenatedHeaders.split(";").map{it.trim()}
     val sessionCookies = splitUpCookies.mapNotNull { sessionIdCookieRegex.matchEntire(it)?.groups?.get(1)?.value }

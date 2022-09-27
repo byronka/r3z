@@ -23,6 +23,7 @@ import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.support.ui.Select
+import java.util.*
 
 enum class Drivers(val driver: () -> WebDriver){
     FIREFOX(
@@ -202,23 +203,23 @@ class ViewTimePage(private val driver: WebDriver, private val domain: String) {
 
     fun submitTimeForPeriod() {
         val submitButton = driver.findElement(By.cssSelector("#${ViewTimeAPI.Elements.SUBMIT_BUTTON.getId()}"))
-        check(submitButton.text.toLowerCase() == "submit")
+        check(submitButton.text.lowercase(Locale.getDefault()) == "submit")
         return submitButton.click()
     }
 
     fun verifyPeriodIsSubmitted() : Boolean {
         val submitButton = driver.findElement(By.cssSelector("#${ViewTimeAPI.Elements.SUBMIT_BUTTON.getId()}"))
-        return submitButton.text.toLowerCase() == "unsubmit"
+        return submitButton.text.lowercase(Locale.getDefault()) == "unsubmit"
     }
 
     fun verifyPeriodIsUnsubmitted() : Boolean{
         val submitButton = driver.findElement(By.cssSelector("#${ViewTimeAPI.Elements.SUBMIT_BUTTON.getId()}"))
-        return submitButton.text.toLowerCase() == "submit"
+        return submitButton.text.lowercase(Locale.getDefault()) == "submit"
     }
 
     fun unsubmitForTimePeriod() {
         val submitButton = driver.findElement(By.cssSelector("#${ViewTimeAPI.Elements.SUBMIT_BUTTON.getId()}"))
-        check(submitButton.text.toLowerCase() == "unsubmit")
+        check(submitButton.text.lowercase() == "unsubmit")
         return submitButton.click()
     }
 

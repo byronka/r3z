@@ -13,6 +13,7 @@ import coverosR3z.timerecording.api.CreateEmployeeAPI
 import coverosR3z.timerecording.api.ProjectAPI
 import coverosR3z.timerecording.api.ViewTimeAPI
 import java.lang.IllegalArgumentException
+import java.util.*
 
 /**
  * This is used to show messages to the user after
@@ -36,7 +37,7 @@ class MessageAPI {
              */
             val body = """
                 <div class="container">
-                    <div id="message_text" class="${message.type.toString().toLowerCase()}" >${safeHtml(message.text)}</div>
+                    <div id="message_text" class="${message.type.toString().lowercase(Locale.getDefault())}" >${safeHtml(message.text)}</div>
                     <a class="button" href="${safeAttr(message.returnLink)}">OK</a>
                 </div>
                 """.trimIndent()
@@ -104,7 +105,8 @@ class MessageAPI {
          */
         fun createCustomMessageRedirect(msg: String, isSuccess: Boolean, returnPath: String): PreparedResponseData {
             require(msg.length <= 200)
-            return ServerUtilities.redirectTo("$path?$customReturnLinkKey=${encode(returnPath)}&$customIsSuccessKey=${isSuccess.toString().toLowerCase()}&$customMessageKey=${encode(msg)}")
+            return ServerUtilities.redirectTo("$path?$customReturnLinkKey=${encode(returnPath)}&$customIsSuccessKey=${isSuccess.toString()
+                .lowercase(Locale.getDefault())}&$customMessageKey=${encode(msg)}")
         }
 
     }

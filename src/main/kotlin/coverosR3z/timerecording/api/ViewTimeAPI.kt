@@ -11,6 +11,7 @@ import coverosR3z.server.utility.AuthUtilities.Companion.doGETRequireAuth
 import coverosR3z.server.utility.PageComponents
 import coverosR3z.timerecording.types.*
 import coverosR3z.timerecording.utility.ITimeRecordingUtilities
+import java.util.*
 
 class ViewTimeAPI {
 
@@ -131,7 +132,7 @@ class ViewTimeAPI {
             val tru = sd.bc.tru
 
             val te = tru.getTimeEntriesForTimePeriod(employee, currentPeriod)
-            val totalHours = Time(te.sumBy {it.time.numberOfMinutes}).getHoursAsString()
+            val totalHours = Time(te.sumOf { it.time.numberOfMinutes }).getHoursAsString()
             val neededHours = Time(8 * 60 * TimePeriod.numberOfWeekdays(currentPeriod)).getHoursAsString()
             val editIdValue = sd.ahd.queryString[Elements.EDIT_ID.getElemName()]
 
@@ -186,7 +187,7 @@ class ViewTimeAPI {
 
             val dateToDailyHours = te
                 .groupBy { it.date }
-                .mapValues { (_,v) -> v.sumBy { it.time.numberOfMinutes } }
+                .mapValues { (_,v) -> v.sumOf { it.time.numberOfMinutes } }
                 .entries.joinToString(separator = ",") { "'${it.key.stringValue}' : ${it.value}" }
 
             val body = """
@@ -229,7 +230,8 @@ class ViewTimeAPI {
             <form class="navitem" action="${ApproveApi.path}" method="post">
                 <input type="hidden" name="${Elements.EMPLOYEE_TO_APPROVE_INPUT.getElemName()}" value="${employee.id.value}" />
                 <input type="hidden" name="${Elements.TIME_PERIOD.getElemName()}" value="${timePeriod.start.stringValue}" />
-                <input type="hidden" name="${ApproveApi.Elements.IS_UNAPPROVAL.getElemName()}" value="${isApproved.toString().toLowerCase()}" />
+                <input type="hidden" name="${ApproveApi.Elements.IS_UNAPPROVAL.getElemName()}" value="${isApproved.toString()
+                .lowercase(Locale.getDefault())}" />
                 $buttonHtml
             </form>
         """.trimIndent()
@@ -501,7 +503,7 @@ class ViewTimeAPI {
             tru: ITimeRecordingUtilities,
             employee: Employee
         ): String {
-            val dailyHours = Time(timeEntriesByDate[date]?.sumBy { it.time.numberOfMinutes } ?: 0).getHoursAsString()
+            val dailyHours = Time(timeEntriesByDate[date]?.sumOf { it.time.numberOfMinutes } ?: 0).getHoursAsString()
             val hoursThisWeek = tru.getTimeForWeek(employee,date).getHoursAsString()
             val dateHeaderString = "${date.viewTimeHeaderFormat}, Daily hours: $dailyHours, Weekly hours: $hoursThisWeek"
 
