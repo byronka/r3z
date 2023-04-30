@@ -240,7 +240,7 @@ class FullSystem private constructor(
          * that will indicate the system is active
          */
         fun createSystemRunningMarker() {
-            File("SYSTEM_RUNNING").writeText("This file serves as a marker to indicate the system is running.")
+            File("SYSTEM_RUNNING").writeText("This file serves as a marker to indicate the system is running.\n")
             File("SYSTEM_RUNNING").deleteOnExit()
         }
 
