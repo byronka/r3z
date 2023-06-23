@@ -1,7 +1,7 @@
 The Lab
 =======
 
-The lab is an educational initiative at [Coveros](https://www.coveros.com/), 
+The lab is an educational initiative, 
 focusing on agile engineering practices.  It is led by Byron Katz, an experienced
 developer and agile expert.
 

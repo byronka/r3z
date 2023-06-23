@@ -218,7 +218,7 @@ you will want to focus on is the utility - that is, the overarching business cod
 
 If this is something that can fit inside an existing domain - like time recording -
 then it suits you to add that.  If it does not (and that might be the case for roles),
-then you can make another domain at the top level, under the coverosR3z package.
+then you can make another domain at the top level, under the r3z package.
 
 Underneath that, the typical pattern for organizing the kinds of files are indicated
 in [Directories](#directories).
@@ -455,7 +455,7 @@ For developing an API, some crucial information:
 1. Routing is set in RoutingUtilities
 2. Every API has a companion object that implements an API interface, such as
    GetEndpoint or PostEndpoint (for example, see HomepageAPI.kt)
-3. Choose the authentication mechanisms for the page, from coverosR3z.server.utility.AuthUtilities.Companion.
+3. Choose the authentication mechanisms for the page, from r3z.server.utility.AuthUtilities.Companion.
    Examine any of the other API's to see how these are used, in the handleGet and handlePost methods.
 
 
