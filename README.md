@@ -8,7 +8,7 @@ The software is fast, robust, and well-tested.
 
 #### Quick Start:
 
-* Install [Java](https://www.java.com/en/download/) if you don't already have it.
+* Install [Java](https://jdk.java.net/) if you don't already have it.
 * [Clone](https://git-scm.com/docs/git-clone) or [download](https://github.com/7ep/r3z/archive/master.zip) this repo. 
     * If you don't know what "clone" means here, just download it.
     * if you download, unzip the downloaded file to its own directory.
