@@ -220,8 +220,6 @@ jacoco {
 jacocoTestReport {
     getExecutionData().setFrom(fileTree(buildDir).include("/jacoco/*.exec"))
     reports {
-        xml.enabled true
-        csv.enabled false
         xml.destination file("${buildDir}/jacoco/jacoco.xml")
         // enable a nice-looking HTML report
         html.destination file("${buildDir}/reports/jacoco")
