@@ -45,7 +45,11 @@ deliver:: bundle
 # won't fail if it does exist, then it un-tars our files into that directory, and then it restarts that system.
 #: run the software in the cloud.  Depends on deliver.
 deploy:: deliver
-	    ssh $(HOST_USER)@$(HOST_NAME) "mkdir -p r3z && tar zxf r3z.tar.gz -C r3z && rm r3z.tar.gz && cd r3z && ./restart.sh"
+	    ssh $(HOST_USER)@$(HOST_NAME) "mkdir -p r3z &&\
+     		tar zxf r3z.tar.gz -C r3z && \
+     		rm r3z.tar.gz && \
+     		cd r3z &&\
+     		 ./restart.sh"
 
 JMX_PROPERTIES=-Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
 DEBUG_PROPERTIES=-agentlib:jdwp=transport=dt_socket,server=y,address=8000,suspend=y
@@ -63,6 +67,15 @@ runjar:: jar
 #: run the tests
 test:: classes copyresources testclasses
 	    ./gradlew test
+
+#: download the production database to this directory as db.tar.gz
+prod_db_download::
+	 @echo "create a compressed tar of the database"
+	 ssh opc@inmra.com "cd r3z && tar zcf db.tar.gz db"
+	 @echo "download that tar"
+	 scp opc@inmra.com:~/r3z/db.tar.gz ./
+	 @echo "remove the compressed tar from the server"
+	 ssh opc@inmra.com "rm r3z/db.tar.gz"
 
 # a handy debugging tool.  If you want to see the value of any
 # variable in this file, run something like this from the
