@@ -1,10 +1,6 @@
 #!/bin/sh
 
-# get the directory where this file is located, so we can jump to it
-MYDIR="$(dirname "$(readlink -f "$0")")"
-
-# jump to it
-cd $MYDIR
+cd $R3Z_HOME
 
 # get the old process id
 OLD_PID=$(cat pid)
@@ -63,6 +59,3 @@ then
   echo "***************************************************************"
   echo
 fi
-
-# jump back to where we started
-cd -

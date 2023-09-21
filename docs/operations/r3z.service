@@ -1,0 +1,20 @@
+# Systemd unit file for r3z timekeeping
+[Unit]
+Description=R3z Web Application
+After=syslog.target network.target
+
+[Service]
+Type=forking
+PIDFile=/home/opc/r3z/pid
+Environment=JAVA_HOME=/home/opc/jdk-21
+Environment=R3Z_HOME=/home/opc/r3z
+
+ExecStart=/home/opc/r3z/start.sh
+ExecReload=/home/opc/r3z/restart.sh
+ExecStop=/home/opc/r3z/stop.sh
+
+User=opc
+Group=opc
+
+[Install]
+WantedBy=multi-user.target

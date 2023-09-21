@@ -1,10 +1,6 @@
 #!/bin/sh
 
-# get the directory where this file is located, so we can jump to it
-MYDIR="$(dirname "$(readlink -f "$0")")"
-
-# jump to it
-cd $MYDIR
+cd $R3Z_HOME
 
 # the following presumes there is a keystore in the same directory as r3z.jar.
 # Check "convert_lets_encrypt_certs_to_keystore.txt" in docs/operations for a
@@ -14,10 +10,7 @@ cd $MYDIR
 # minimize memory use where we can
 
 # run the timekeeping application
-java -Djavax.net.ssl.keyStore=/home/opc/inmra.com.keystore -Djavax.net.ssl.keyStorePassword=changeit -jar r3z.jar -h inmra.com  &>>r3z.log &
+$JAVA_HOME/bin/java -Djavax.net.ssl.keyStore=/home/opc/inmra.com.keystore -Djavax.net.ssl.keyStorePassword=changeit -jar r3z.jar -h inmra.com &
 
 # get the process id, pop it in a file (we'll use this to stop the process later)
 echo $! > pid
-
-# jump back to where we started
-cd -

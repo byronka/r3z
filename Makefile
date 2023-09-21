@@ -49,7 +49,7 @@ deploy:: deliver
      		tar zxf r3z.tar.gz -C r3z && \
      		rm r3z.tar.gz && \
      		cd r3z &&\
-     		 ./restart.sh"
+     	    sudo systemctl restart r3z.service"
 
 JMX_PROPERTIES=-Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
 DEBUG_PROPERTIES=-agentlib:jdwp=transport=dt_socket,server=y,address=8000,suspend=y
