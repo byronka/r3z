@@ -1,4 +1,5 @@
 # Systemd unit file for r3z timekeeping
+# this goes at /etc/systemd/system/r3z.service
 [Unit]
 Description=R3z Web Application
 After=syslog.target network.target
@@ -6,7 +7,7 @@ After=syslog.target network.target
 [Service]
 Type=forking
 PIDFile=/home/opc/r3z/pid
-Environment=JAVA_HOME=/home/opc/jdk-21
+Environment=JAVA_HOME=/home/opc/jdk-21.0.5
 Environment=R3Z_HOME=/home/opc/r3z
 
 ExecStart=/home/opc/r3z/start.sh
